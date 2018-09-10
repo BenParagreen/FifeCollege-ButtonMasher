@@ -17,10 +17,7 @@ int main()
 	sf::Texture buttonTexture;
 	buttonTexture.loadFromFile("graphics/button.png");
 
-	//Create Music
-	sf::Music gameMusic;
-	gameMusic.openFromFile("audio/music.ogg");
-	gameMusic.play();
+	
 
 	// Center the button sprite on the screen
 	sf::Sprite buttonSprite;
@@ -29,6 +26,22 @@ int main()
 		gameWindow.getSize().x / 2 - buttonTexture.getSize().x / 2,
 		gameWindow.getSize().y / 2 - buttonTexture.getSize().y / 2
 	);
+
+    //Create Music
+	sf::Music gameMusic;
+	gameMusic.openFromFile("audio/music.ogg");
+	//gameMusic.play();
+
+	// Create Text
+	sf::Font gameFont;
+	gameFont.loadFromFile("fonts/mainFont.ttf");
+	
+	// Create Title
+	sf::Text titleText;
+	titleText.setFont(gameFont);
+	titleText.setString("Button Masher!");
+	titleText.setPosition(
+		gameWindow.getSize().x / 2 - titleText.getLocalBounds().width / 2,30);
 
 
 	// Game Loop
@@ -57,6 +70,7 @@ int main()
 
 		// Draw Everything
 		gameWindow.draw(buttonSprite);
+		gameWindow.draw(titleText);
 
 		// Display window contents on the screen
 		gameWindow.display();
