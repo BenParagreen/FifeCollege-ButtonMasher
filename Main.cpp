@@ -38,10 +38,20 @@ int main()
 	
 	// Create Title
 	sf::Text titleText;
-	titleText.setFont(gameFont);
+	(titleText).setFont(gameFont);
 	titleText.setString("Button Masher!");
+	titleText.setCharacterSize(50);
+	titleText.setFillColor(sf::Color::Cyan);
+	titleText.setStyle(sf::Text::Bold | sf::Text::Italic);
 	titleText.setPosition(
 		gameWindow.getSize().x / 2 - titleText.getLocalBounds().width / 2,30);
+	
+	sf::Text authorText;
+	(authorText).setFont(gameFont);
+	authorText.setString("By Ben Paragreen");
+	authorText.setStyle(sf::Text::Underlined);
+	authorText.setPosition(
+		gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 75);
 
 
 	// Game Loop
@@ -71,6 +81,7 @@ int main()
 		// Draw Everything
 		gameWindow.draw(buttonSprite);
 		gameWindow.draw(titleText);
+		gameWindow.draw(authorText);
 
 		// Display window contents on the screen
 		gameWindow.display();
