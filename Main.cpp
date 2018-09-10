@@ -1,7 +1,7 @@
 // Included Libraries
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-
+#include <string>
 
 
 // entry point for the program
@@ -49,9 +49,15 @@ int main()
 	sf::Text authorText;
 	(authorText).setFont(gameFont);
 	authorText.setString("By Ben Paragreen");
-	authorText.setStyle(sf::Text::Underlined);
 	authorText.setPosition(
 		gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 75);
+
+	// Score
+	int score = 0;
+	sf::Text scoreText;
+	scoreText.setFont(gameFont);
+	scoreText.setString("Score: " + std::to_string(score));
+	scoreText.setPosition(10, 30);
 
 
 	// Game Loop
@@ -72,9 +78,11 @@ int main()
 			}
 		}
 
-		// TODO: Update game state
+		// Update game state
+		score = score + 100000000;
+		scoreText.setString("Score: " + std::to_string(score));
 
-		// TODO: Draw graphics
+	
 		// Clear window to a single color
 		gameWindow.clear(sf::Color::Black);
 
@@ -82,6 +90,7 @@ int main()
 		gameWindow.draw(buttonSprite);
 		gameWindow.draw(titleText);
 		gameWindow.draw(authorText);
+		gameWindow.draw(scoreText);
 
 		// Display window contents on the screen
 		gameWindow.display();
