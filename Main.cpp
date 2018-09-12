@@ -29,7 +29,7 @@ int main()
     //Create Music
 	sf::Music gameMusic;
 	gameMusic.openFromFile("audio/music.ogg");
-	//gameMusic.play();
+	gameMusic.play();
 
 	// Create Text
 	sf::Font gameFont;
@@ -87,6 +87,12 @@ int main()
 	clickBuffer.loadFromFile("audio/buttonclick.ogg");
 	sf::Sound clickSound;
 	clickSound.setBuffer(clickBuffer);
+
+	//Game over sound effect
+	sf::SoundBuffer overBuffer;
+	overBuffer.loadFromFile("audio/gameover.ogg");
+	sf::Sound overSound;
+	overSound.setBuffer(overBuffer);
 
 	//Game State
 	bool playing = true;
@@ -154,6 +160,7 @@ int main()
 				timeRemaining = sf::seconds(0.0f);
 				playing = false;
 				promptText.setString("Your final score was " + std::to_string(score) + "!\nClick the button to start a new game");
+				overSound.play();
 			}
 		}
 		
