@@ -24,8 +24,7 @@ int main()
 	buttonSprite.setTexture(buttonTexture);
 	buttonSprite.setPosition(
 		gameWindow.getSize().x / 2 - buttonTexture.getSize().x / 2,
-		gameWindow.getSize().y / 2 - buttonTexture.getSize().y / 2
-	);
+		gameWindow.getSize().y / 2 - buttonTexture.getSize().y / 2);
 
     //Create Music
 	sf::Music gameMusic;
@@ -57,8 +56,19 @@ int main()
 	sf::Text scoreText;
 	scoreText.setFont(gameFont);
 	scoreText.setString("Score: " + std::to_string(score));
-	scoreText.setPosition(10, 30);
+	scoreText.setPosition(20, 30);
 
+	//Timer Text
+	sf::Text timerText;
+	timerText.setFont(gameFont);
+	timerText.setString("Time Remaining: 0");
+	timerText.setFillColor(sf::Color::White);
+	timerText.setPosition(gameWindow.getSize().x -30 - timerText.getLocalBounds().width , 30);
+
+	//Timer Functionality
+	sf::Time timeLimit = sf::seconds(10.0f);
+	sf::Time timeRemaining = timeLimit;
+	sf::Clock gameClock;
 
 	// Game Loop
 	// Runs every frame until the game window is closed
@@ -70,6 +80,15 @@ int main()
 		{
 			// Process events
 
+			//check if mouse button is pressed
+			if (gameEvent.type == sf::Event::MouseButtonPressed)
+			{
+				buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y);
+
+				score = score + 1;
+
+			}
+
 			// Check if the event is the closed event
 			if (gameEvent.type == sf::Event::Closed)
 			{
@@ -79,7 +98,10 @@ int main()
 		}
 
 		// Update game state
-		score = score + 100000000;
+		sf::Time frameTime = gameClock.restart();
+		timeRemaining = timeRemaining - frameTime;
+		timerText.setString("Time Remaining: " + std::to_string((int)std::ceilf(timeRemaining.asSeconds())));
+
 		scoreText.setString("Score: " + std::to_string(score));
 
 	
@@ -91,6 +113,7 @@ int main()
 		gameWindow.draw(titleText);
 		gameWindow.draw(authorText);
 		gameWindow.draw(scoreText);
+		gameWindow.draw(timerText);
 
 		// Display window contents on the screen
 		gameWindow.display();
