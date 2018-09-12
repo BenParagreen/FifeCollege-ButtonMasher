@@ -51,6 +51,14 @@ int main()
 	authorText.setPosition(
 		gameWindow.getSize().x / 2 - authorText.getLocalBounds().width / 2, 75);
 
+	sf::Text promptText;
+	(promptText).setFont(gameFont);
+	promptText.setString("Click the button to start the game");
+	promptText.setCharacterSize(16);
+	promptText.setPosition(
+		gameWindow.getSize().x / 2 - promptText.getLocalBounds().width / 2, 120);
+
+
 	// Score
 	int score = 0;
 	sf::Text scoreText;
@@ -92,20 +100,26 @@ int main()
 			//check if mouse button is pressed
 			if (gameEvent.type == sf::Event::MouseButtonPressed)
 			{
-				buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y);
-
-				//Are We playing?
-				if (playing == true) 
+				if (buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y))
 				{
-					score = score + 1;
-				}
-				else 
-				{
-					playing = true;
-				}
+					//Are We playing?
+					if (playing == true)
+					{
+						score = score + 1;
+					}
+					else
+					{
+						playing = true;
 
-				clickSound.play();
+						//reset the game data
+						score = 0;
+						timeRemaining = timeLimit;
 
+						promptText.setString("Click the button as fast as you can");
+					}
+
+					clickSound.play();
+				}
 			}
 
 			// Check if the event is the closed event
@@ -126,7 +140,7 @@ int main()
 			{
 				timeRemaining = sf::seconds(0.0f);
 				playing = false;
-
+				promptText.setString("Your final score was " + std::to_string(score) + "!\nClick the button to start a new game");
 			}
 		}
 		
@@ -143,6 +157,7 @@ int main()
 		gameWindow.draw(buttonSprite);
 		gameWindow.draw(titleText);
 		gameWindow.draw(authorText);
+		gameWindow.draw(promptText);
 		gameWindow.draw(scoreText);
 		gameWindow.draw(timerText);
 
