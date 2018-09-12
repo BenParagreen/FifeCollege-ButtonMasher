@@ -95,8 +95,7 @@ int main()
 	overSound.setBuffer(overBuffer);
 
 	//Game State
-	bool playing = true;
-	bool resettimer = false;
+	bool playing = false;
 
 	// Game Loop
 	// Runs every frame until the game window is closed
@@ -113,7 +112,7 @@ int main()
 			//check if mouse button is pressed
 			if (gameEvent.type == sf::Event::MouseButtonPressed)
 			{
-				if (buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y), resettimer == false)
+				if (buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y))
 				{
 					//Are We playing?
 					if (playing == true)
@@ -123,18 +122,12 @@ int main()
 					else
 					{
 						playing = true;
-						resettimer = true;
 
 						//reset the game data
 						score = 0;
 						timeRemaining = timeLimit;
 
 						promptText.setString("Click the button as fast as you can");
-						resetRemaining = resetRemaining - frameTime;
-						if (resetRemaining.asSeconds() <=0) 
-				        {
-					        resettimer = false;
-				        }
 					}
 
 					clickSound.play();
